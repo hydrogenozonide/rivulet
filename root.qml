@@ -9,9 +9,14 @@ ShellRoot {
             left: true
             bottom: true
         }
-        implicitWidth: 200
+        implicitWidth: 40
         color: "#ffffff"
 
+		SystemClock {
+		  id: clock
+		  precision: SystemClock.Minutes
+		}
+		
         Niri {
             id: niri
             Component.onCompleted: connect()
@@ -29,6 +34,7 @@ ShellRoot {
             anchors {
                 top: parent.top
                 topMargin: 5
+                horizontalCenter: parent.horizontalCenter
             }
 
             Column {
@@ -63,13 +69,37 @@ ShellRoot {
                 }
             }
 
-            Text {
-                text: niri.focusedWindow?.title ?? ""
-                font.family: "Barlow Medium"
-                font.pixelSize: 16
-                color: "#89919A"
-                rotation: 90
-            }
         }
+        Text {
+            text: niri.focusedWindow?.title ?? ""
+            font.family: "Barlow Medium"
+            font.pixelSize: 16
+            color: "#89919A"
+        
+            anchors.centerIn: parent
+            rotation: 90
+            transformOrigin: Item.Center
+        }
+
+		Column {
+			anchors {
+				bottom: parent.bottom
+				bottomMargin: 10
+				horizontalCenter: parent.horizontalCenter
+			}
+
+			Text {
+				text: clock.hours
+				font.pixelSize: 12
+				horizontalAlignment: Text.AlignHCenter
+			}
+
+			Text {
+				text: clock.minutes
+				font.pixelSize: 12
+				horizontalAlignment: Text.AlignHCenter
+			}
+		}
+        
     }
 }
