@@ -13,7 +13,7 @@ ShellRoot {
         aboveWindows: true
         exclusiveZone: 40
         implicitWidth: sidebarWidth + dashboardWidth
-        color: "transparent"   // <- changed
+        color: "transparent"
         Component.onCompleted: niri.workspaces.maxCount = 10
 
         anchors {
@@ -35,6 +35,15 @@ ShellRoot {
                 console.error("Niri error:", error);
             }
         }
+
+    mask: Region {
+        x: 0
+        y: 0
+        width: panel.open
+               ? panel.sidebarWidth + panel.dashboardWidth
+               : panel.sidebarWidth
+        height: panel.height
+    }
 
         Row {
             id: contentRow
@@ -155,5 +164,6 @@ ShellRoot {
         }
     }
 }
+
 
 
