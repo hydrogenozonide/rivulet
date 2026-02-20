@@ -6,10 +6,13 @@ ShellRoot {
     PanelWindow {
         id: panel
 
-        // ----- Panel open/close state -----
+        // --- actual sliding ---
         property bool open: false
         property int sidebarWidth: 40
         property int dashboardWidth: 400
+
+		aboveWindows: true
+		exclusiveZone: 40
 
         implicitWidth: panel.open ? panel.sidebarWidth + panel.dashboardWidth : panel.sidebarWidth
         color: "#ffffff"
@@ -21,7 +24,7 @@ ShellRoot {
             bottom: true
         }
 
-        // ----- Clock and Niri -----
+        // --- nerd shit ---
         SystemClock {
             id: clock
 
@@ -38,13 +41,13 @@ ShellRoot {
             }
         }
 
-        // ----- Layout: Row for sidebar + dashboard -----
+        // --- row for actual content  -----
         Row {
             anchors.fill: parent
 
 
 
-            // --- Sliding dashboard panel ---
+            // --- dashboard ---
             Item {
                 // Add dashboard widgets here later
 
@@ -68,7 +71,7 @@ ShellRoot {
                 }
 
             }
-            // --- Sidebar content ---
+            // --- sidebar ---
             Item {
                 width: panel.sidebarWidth
                 anchors.top: parent.top
@@ -120,9 +123,9 @@ ShellRoot {
 
                 }
 
-                // Rotated window title
+                // --- window title ---
                 Text {
-                    text: niri.focusedWindow.title ?? "" // add ? after focusedWindow afer lint
+                    text: niri.focusedWindow.title ?? "" // add ? after focusedWindow afer lint, linter hates that for some reason + errors
                     font.family: "Barlow Medium"
                     font.pixelSize: 16
                     color: "#89919A"
@@ -131,7 +134,7 @@ ShellRoot {
                     transformOrigin: Item.Center
                 }
 
-                // Clock at bottom
+                // --- clock ---
                 Column {
                     anchors {
                         bottom: parent.bottom
