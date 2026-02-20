@@ -24,11 +24,13 @@ ShellRoot {
 
         SystemClock {
             id: clock
+
             precision: SystemClock.Minutes
         }
 
         Niri {
             id: niri
+
             Component.onCompleted: connect()
             onConnected: console.log("Connected to niri")
             onErrorOccurred: function(error) {
@@ -36,28 +38,12 @@ ShellRoot {
             }
         }
 
-    mask: Region {
-        x: 0
-        y: 0
-        width: panel.open
-               ? panel.sidebarWidth + panel.dashboardWidth
-               : panel.sidebarWidth
-        height: panel.height
-    }
-
         Row {
             id: contentRow
+
             width: panel.sidebarWidth + panel.dashboardWidth
             height: parent.height
-
             x: panel.open ? 0 : -panel.dashboardWidth
-
-            Behavior on x {
-                NumberAnimation {
-                    duration: 250
-                    easing.type: Easing.InOutCubic
-                }
-            }
 
             // --- dashboard ---
             Item {
@@ -68,6 +54,29 @@ ShellRoot {
                     anchors.fill: parent
                     color: "#1e1f22"
                 }
+
+                Grid {
+                    id: myGrid
+
+                    anchors.fill: parent
+                    columns: 4
+                    rows: 10
+                    spacing: 2
+
+                    Repeater {
+                        model: 40
+
+                        Rectangle {
+                            width: parent.width / 4
+                            height: parent.height / 10
+                            color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1)
+                            border.color: "black"
+                        }
+
+                    }
+
+                }
+
             }
 
             // --- sidebar ---
@@ -75,7 +84,6 @@ ShellRoot {
                 width: panel.sidebarWidth
                 height: parent.height
 
-                // Sidebar background (new)
                 Rectangle {
                     anchors.fill: parent
                     color: "#ffffff"
@@ -83,6 +91,7 @@ ShellRoot {
 
                 Column {
                     spacing: 10
+
                     anchors {
                         top: parent.top
                         topMargin: 5
@@ -98,9 +107,7 @@ ShellRoot {
                             Rectangle {
                                 width: 30
                                 height: 20
-                                color: model.isFocused ? "#106DAA"
-                                      : model.isActive ? "#377B86"
-                                      : "#222225"
+                                color: model.isFocused ? "#106DAA" : model.isActive ? "#377B86" : "#222225"
                                 border.color: model.isUrgent ? "red" : "#16181A"
                                 border.width: 2
                                 radius: 3
@@ -109,9 +116,7 @@ ShellRoot {
                                     anchors.centerIn: parent
                                     text: model.name || model.index
                                     font.family: "Barlow Medium"
-                                    color: model.isFocused || model.isActive
-                                           ? "white"
-                                           : "#89919A"
+                                    color: model.isFocused || model.isActive ? "white" : "#89919A"
                                     font.pixelSize: 14
                                 }
 
@@ -120,13 +125,17 @@ ShellRoot {
                                     onClicked: niri.focusWorkspaceById(model.id)
                                     cursorShape: Qt.PointingHandCursor
                                 }
+
                             }
+
                         }
+
                     }
+
                 }
 
                 Text {
-                    text: niri.focusedWindow?.title ?? ""
+                    text: niri.focusedWindow.title ?? "" // add back ? after focusedWindow after linting
                     font.family: "Barlow Medium"
                     font.pixelSize: 16
                     color: "#89919A"
@@ -135,7 +144,7 @@ ShellRoot {
                     transformOrigin: Item.Center
                 }
 
-				// --- clock ---
+                // --- clock ---
                 Column {
                     anchors {
                         bottom: parent.bottom
@@ -158,12 +167,30 @@ ShellRoot {
                             anchors.fill: parent
                             onClicked: panel.open = !panel.open
                         }
+
                     }
+
                 }
+
             }
+
+            Behavior on x {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.InOutCubic
+                }
+
+            }
+
         }
+
+        mask: Region {
+            x: 0
+            y: 0
+            width: panel.open ? panel.sidebarWidth + panel.dashboardWidth : panel.sidebarWidth
+            height: panel.height
+        }
+
     }
+
 }
-
-
-
