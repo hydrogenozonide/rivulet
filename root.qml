@@ -1,5 +1,6 @@
 import Niri 0.1
 import QtQuick
+import QtQuick.Controls 6.4
 import Quickshell
 
 ShellRoot {
@@ -56,21 +57,35 @@ ShellRoot {
                 }
 
                 Grid {
-                    id: myGrid
+                    id: controlPanelGrid
 
                     anchors.fill: parent
                     columns: 4
                     rows: 10
                     spacing: 2
 
-                    Repeater {
-                        model: 40
+                    Button {
+                        id: muteButton
 
-                        Rectangle {
-                            width: parent.width / 4
-                            height: parent.height / 10
-                            color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1)
-                            border.color: "black"
+                        property bool muted: false
+
+                        implicitWidth: parent.width / parent.columns - parent.columnSpacing
+                        implicitHeight: parent.width / parent.columns - parent.columnSpacing
+                        text: muted ? "Muted" : "Unmuted"
+                        onClicked: {
+                            muted = !muted;
+                            Qt.shell.execute("bash", ["-c", muted ? "pactl set-sink-mute @DEFAULT_SINK@ 1" : "pactl set-sink-mute @DEFAULT_SINK@ 0"]);
+                        }
+
+                        background: Rectangle {
+                            color: muted ? "#d64545" : "#ffffff"
+                        }
+
+                        contentItem: Text {
+                            text: muteButton.text
+                            anchors.centerIn: parent
+                            color: muted ? "#ffffff" : "#d64545"
+                            font.pixelSize: 14
                         }
 
                     }
