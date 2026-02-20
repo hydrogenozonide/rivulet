@@ -6,16 +6,14 @@ ShellRoot {
     PanelWindow {
         id: panel
 
-        // --- actual sliding ---
         property bool open: false
         property int sidebarWidth: 40
         property int dashboardWidth: 400
 
-		aboveWindows: true
-		exclusiveZone: 40
-
-        implicitWidth: panel.open ? panel.sidebarWidth + panel.dashboardWidth : panel.sidebarWidth
-        color: "#ffffff"
+        aboveWindows: true
+        exclusiveZone: 40
+        implicitWidth: sidebarWidth + dashboardWidth
+        color: "transparent"   // <- changed
         Component.onCompleted: niri.workspaces.maxCount = 10
 
         anchors {
@@ -24,16 +22,13 @@ ShellRoot {
             bottom: true
         }
 
-        // --- nerd shit ---
         SystemClock {
             id: clock
-
             precision: SystemClock.Minutes
         }
 
         Niri {
             id: niri
-
             Component.onCompleted: connect()
             onConnected: console.log("Connected to niri")
             onErrorOccurred: function(error) {
@@ -41,46 +36,44 @@ ShellRoot {
             }
         }
 
-        // --- row for actual content  -----
         Row {
-            anchors.fill: parent
+            id: contentRow
+            width: panel.sidebarWidth + panel.dashboardWidth
+            height: parent.height
 
+            x: panel.open ? 0 : -panel.dashboardWidth
 
+            Behavior on x {
+                NumberAnimation {
+                    duration: 250
+                    easing.type: Easing.InOutCubic
+                }
+            }
 
             // --- dashboard ---
             Item {
-                // Add dashboard widgets here later
-
-                id: dashboardPanel
-
-                width: panel.open ? panel.dashboardWidth : 0
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+                width: panel.dashboardWidth
+                height: parent.height
 
                 Rectangle {
                     anchors.fill: parent
                     color: "#1e1f22"
                 }
-
-                Behavior on width {
-                    NumberAnimation {
-                        duration: 250
-                        easing.type: Easing.OutCubic
-                    }
-
-                }
-
             }
+
             // --- sidebar ---
             Item {
                 width: panel.sidebarWidth
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+                height: parent.height
 
-                // Workspace column
+                // Sidebar background (new)
+                Rectangle {
+                    anchors.fill: parent
+                    color: "#ffffff"
+                }
+
                 Column {
                     spacing: 10
-
                     anchors {
                         top: parent.top
                         topMargin: 5
@@ -96,7 +89,9 @@ ShellRoot {
                             Rectangle {
                                 width: 30
                                 height: 20
-                                color: model.isFocused ? "#106DAA" : model.isActive ? "#377B86" : "#222225"
+                                color: model.isFocused ? "#106DAA"
+                                      : model.isActive ? "#377B86"
+                                      : "#222225"
                                 border.color: model.isUrgent ? "red" : "#16181A"
                                 border.width: 2
                                 radius: 3
@@ -105,7 +100,9 @@ ShellRoot {
                                     anchors.centerIn: parent
                                     text: model.name || model.index
                                     font.family: "Barlow Medium"
-                                    color: model.isFocused || model.isActive ? "white" : "#89919A"
+                                    color: model.isFocused || model.isActive
+                                           ? "white"
+                                           : "#89919A"
                                     font.pixelSize: 14
                                 }
 
@@ -114,18 +111,13 @@ ShellRoot {
                                     onClicked: niri.focusWorkspaceById(model.id)
                                     cursorShape: Qt.PointingHandCursor
                                 }
-
                             }
-
                         }
-
                     }
-
                 }
 
-                // --- window title ---
                 Text {
-                    text: niri.focusedWindow.title ?? "" // add ? after focusedWindow afer lint, linter hates that for some reason + errors
+                    text: niri.focusedWindow?.title ?? ""
                     font.family: "Barlow Medium"
                     font.pixelSize: 16
                     color: "#89919A"
@@ -134,7 +126,7 @@ ShellRoot {
                     transformOrigin: Item.Center
                 }
 
-                // --- clock ---
+				// --- clock ---
                 Column {
                     anchors {
                         bottom: parent.bottom
@@ -157,26 +149,11 @@ ShellRoot {
                             anchors.fill: parent
                             onClicked: panel.open = !panel.open
                         }
-
                     }
-
                 }
-
             }
-
         }
-
-        Behavior on implicitWidth {
-            NumberAnimation {
-                duration: 250
-                easing.type: Easing.InOutCubic
-            }
-
-        }
-
     }
-
 }
-
 
 
