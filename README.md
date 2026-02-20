@@ -7,12 +7,19 @@ I Highly recommend NOT installing anything from this repo. The code's bad, it al
 
 # TODO
 - [x] ~~Basic sidebar function~~
-- [ ] Basic panel functionality
+- [x] ~~Basic panel functionality~~
 - [ ] System widgets in panel
 - [ ] Launcher/Dmenu
 - [ ] Control panel, android style
 - [ ] Nice wallpaper grid
 - [ ] Push notifications
 - [ ] Notifications in panel
+- [ ] Material 3 design style
+- [ ] Matugen colours
 - [ ] Make the whole thing look less crappy
 - [ ] Make it actually GOOD?
+
+# Credits
+- It's not implemented yet, but I'll be using [QML Material](https://github.com/hypengw/QmlMaterial/) for most of the visuals as graphics are definitely not my strong suit.
+- [Caelestia](https://github.com/caelestia-dots/shell) served as a lot of inspiration for actually doing this whole thing, and the layout of the sidebar. I haven't actually read any of their code though.
+- A hell of a lot of [r/unixporn](https://reddit.com/r/unixporn) for inspiration.
