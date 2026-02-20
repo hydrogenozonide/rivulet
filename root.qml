@@ -3,13 +3,15 @@ import QtQuick
 import QtQuick.Controls 6.4
 import Quickshell
 
+import "controlPanel"
+
 ShellRoot {
     PanelWindow {
         id: panel
 
         property bool open: false
         property int sidebarWidth: 40
-        property int dashboardWidth: 400
+        property int dashboardWidth: 380
 
         aboveWindows: true
         exclusiveZone: 40
@@ -89,6 +91,14 @@ ShellRoot {
                         }
 
                     }
+
+                    PanelButton {
+                        onText: "Muted"
+                        offText: "Unmuted"
+                        commandOn: "pactl set-sink-mute @DEFAULT_SINK@ 1"
+                        commandOff: "pactl set-sink-mute @DEFAULT_SINK@ 0"
+                    }
+
 
                 }
 
