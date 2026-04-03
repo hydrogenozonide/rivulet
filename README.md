@@ -1,13 +1,13 @@
 # Rivulet
 An extremely extremely EXTREMELY work-in-progress desktop shell for Niri, written in Quickshell.
-This is also my first time using quickshell so I'm just playing around for the first couple tens of commits.
+This is also my first time using quickshell so I'm just playing around for the first couple ~~tens~~ dozens of commits.
 
 # THIS IS NOT YET IN A USABLE STATE!
 I Highly recommend NOT installing anything from this repo. The code's bad, it all barely works at the best of times, there'll be multiple breaking changes a day.
 
 # TODO
-- [x] ~~Basic sidebar function~~
-- [x] ~~Basic panel functionality~~
+- [ ] Basic topbar function
+- [ ] Basic panel functionality
 - [ ] System widgets in panel
 - [ ] Launcher/Dmenu
 - [ ] Control panel, android style
