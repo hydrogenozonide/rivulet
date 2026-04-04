@@ -55,7 +55,7 @@ PanelWindow {
 	Rectangle {
 		id: leftContainer
 		anchors.left: parent.left
-	    width: focusedTitle.implicitWidth + 20
+	    width: workspacesText.implicitWidth + 20
 	    height: 30
 	    color: "#ffffff"
 	    border.color: "black"
@@ -82,7 +82,7 @@ PanelWindow {
 	Rectangle {
 		id: rightContainer
 		anchors.right: parent.right
-	    width: focusedTitle.implicitWidth + 20
+	    width: modulesText.implicitWidth + 20
 	    height: 30
 	    color: "#ffffff"
 	    border.color: "black"
