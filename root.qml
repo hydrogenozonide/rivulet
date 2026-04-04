@@ -33,7 +33,11 @@ PanelWindow {
 	    color: "#ffffff"
 	    border.color: "black"
 	    border.width: 2
-	    radius: 20
+
+	    bottomLeftRadius: 20
+	    topLeftRadius: 0
+	    bottomRightRadius: 20
+	    topRightRadius: 0
 
 	    Text {
 	        id: focusedTitle
@@ -56,7 +60,11 @@ PanelWindow {
 	    color: "#ffffff"
 	    border.color: "black"
 	    border.width: 2
-	    radius: 20
+
+	    bottomLeftRadius: 0
+	    topLeftRadius: 0
+	    bottomRightRadius: 20
+	    topRightRadius: 0
 
 	    Text {
 	        id: workspacesText
@@ -79,14 +87,18 @@ PanelWindow {
 	    color: "#ffffff"
 	    border.color: "black"
 	    border.width: 2
-	    radius: 20
+
+	    bottomLeftRadius: 20
+	    topLeftRadius: 0
+	    bottomRightRadius: 0
+	    topRightRadius: 0
 
 	    Text {
 	        id: modulesText
 	        anchors.centerIn: parent
 	        text: {
-	            const t = niri.focusedWindow?.title ?? "";
-	            return t.length > 44 ? t.slice(0, 44) + "…" : t;
+	            const t = niri.focusedWindow?.title ?? ""
+	            return t.length > 44 ? t.slice(0, 44) + "…" : t
 	        }
 	        font.family: "JetBrainsMono Nerd Font"
 	        font.pixelSize: 16
